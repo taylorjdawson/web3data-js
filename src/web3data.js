@@ -4,13 +4,14 @@ const {
   BLOCKCHAIN_ID_HEADER,
   DEFAULT_BASE_URL
 } = require('./constants')
-const {is, throwIf} = require('./utils')
+const {is, throwIf, ethFactory} = require('./utils')
 const Address = require('./address')
 const Token = require('./token')
 const Contract = require('./contract')
 const Transaction = require('./transaction')
 const Block = require('./block')
 const Signature = require('./signature')
+const Market = require('./market')
 const WebSocketClient = require('./websocket')
 
 /**
@@ -55,6 +56,10 @@ class Web3Data {
     this.transaction = new Transaction(this)
     this.block = new Block(this)
     this.signature = new Signature(this)
+    this.market = new Market(this)
+
+    /* Attach eth specific methods under eth namespace */
+    this.eth = ethFactory(this)
 
     this.websocket = null
   }
